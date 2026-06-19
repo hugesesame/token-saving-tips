@@ -558,7 +558,7 @@ h1, h2, h3, p {
   margin-top: var(--space-sm);
   padding: var(--space-sm) var(--space-md);
   background: var(--color-surface-tile-3);
-  color: #f5f5f7;
+  color: #5fd97a;
   font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
   font-size: 12.5px;
   line-height: 1.7;
