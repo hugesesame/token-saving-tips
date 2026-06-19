@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Claude Code トークン節約Tips</title>
+<meta name="description" content="Claude Codeでトークン消費を抑えるための実践Tipsを、初級・中級・上級に分けて解説します。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Global Nav -->
+<header class="global-nav">
+  <div class="global-nav__inner">
+    <span class="global-nav__logo">Token Saving Tips</span>
+    <nav class="global-nav__links" aria-label="グローバルナビゲーション">
+      <a href="#beginner">初級</a>
+      <a href="#intermediate">中級</a>
+      <a href="#advanced">上級</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Sub Nav -->
+<div class="sub-nav">
+  <div class="sub-nav__inner">
+    <span class="sub-nav__title">Claude Code 節約ガイド</span>
+    <nav class="sub-nav__links" aria-label="セクションナビゲーション">
+      <a href="#beginner" data-jump>初級</a>
+      <a href="#intermediate" data-jump>中級</a>
+      <a href="#advanced" data-jump>上級</a>
+    </nav>
+  </div>
+</div>
+
+<!-- Jump nav (mobile-friendly pill strip) -->
+<nav class="jump-nav" aria-label="レベル別ジャンプ">
+  <a class="jump-nav__link" href="#beginner" data-jump>初級</a>
+  <a class="jump-nav__link" href="#intermediate" data-jump>中級</a>
+  <a class="jump-nav__link" href="#advanced" data-jump>上級</a>
+</nav>
+
+<main>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero__inner">
+      <p class="hero__eyebrow">CLAUDE CODE GUIDE</p>
+      <h1 class="hero__title">トークンを賢く使う。<br>会話を、もっと長く。</h1>
+      <p class="hero__lead">Claude Codeはとても便利ですが、使い方次第でトークン消費量は大きく変わります。仕組みを理解し、ちょっとした工夫を積み重ねるだけで、同じ作業をより少ないコストで進められます。</p>
+      <div class="hero__cta">
+        <a class="button-primary" href="#beginner">初級から読む</a>
+        <a class="button-secondary-pill" href="#advanced">上級Tipsへ</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       BEGINNER
+       ============================================================ -->
+  <section id="beginner" class="tile tile--light">
+    <div class="tile__inner">
+      <div class="tile__header">
+        <span class="level-badge level-badge--beginner">初級 · BEGINNER</span>
+        <h2 class="tile__title">まずは「トークン」を理解する</h2>
+        <p class="tile__desc">節約の第一歩は、何が消費されているのかを正しく知ることです。基本概念とコマンドの使い分けを押さえましょう。</p>
+      </div>
+
+      <div class="tip-grid">
+
+        <article class="tip-card tip-card--wide">
+          <span class="tip-card__number">1</span>
+          <h3 class="tip-card__title">トークンとは何か</h3>
+          <p class="tip-card__body">トークンは、AIモデルが文章を読み書きする際の最小単位です。英語ならおおよそ1単語が1トークン前後、日本語は1〜2文字で1トークンほどになります。Claude Codeでのやり取り、読み込んだファイル、ツールの実行結果——会話に登場するすべての文字情報がトークンとしてカウントされ、利用コストとコンテキストウィンドウ（モデルが一度に扱える情報量の上限）の両方を消費します。</p>
+        </article>
+
+        <article class="tip-card">
+          <span class="tip-card__number">2</span>
+          <h3 class="tip-card__title">使用制限の基本</h3>
+          <p class="tip-card__body">Claude Codeには大きく2つの制限軸があります。1つはモデルごとの<strong>コンテキストウィンドウ</strong>（一度に扱える最大トークン数）、もう1つはプランに応じた<strong>使用量制限</strong>です。コンテキストが上限に近づくと自動で要約（オートコンパクト）が走り、使用量上限に達すると一時的に利用できなくなります。</p>
+        </article>
+
+        <article class="tip-card">
+          <span class="tip-card__number">3</span>
+          <h3 class="tip-card__title">インプットよりアウトプットが高コスト</h3>
+          <p class="tip-card__body">多くのLLMでは、出力（Output）トークンの単価は入力（Input）トークンより数倍高く設定されています。「とりあえず詳しく説明して」と頼むより、必要な結論だけを求めるほうがコストを抑えられます。長大なコード全文の出力を毎回求めるのも高くつく操作の一つです。</p>
+          <p class="example-label">改善前</p>
+          <pre class="code-block"><code>このファイルを全部書き直して、
+変更点も詳しく説明して</code></pre>
+          <p class="example-label">改善後</p>
+          <pre class="code-block"><code>該当の関数だけ差分(diff)で出力して。
+説明は変更理由を1〜2行で</code></pre>
+          <p class="example-note">「全文出力＋詳細解説」より「差分だけ＋要点のみ」の方が、出力トークンを大きく削減できます。</p>
+        </article>
+
+        <article class="tip-card tip-card--wide">
+          <span class="tip-card__number">4</span>
+          <h3 class="tip-card__title">毎回「全履歴」を送り直している、という事実</h3>
+          <p class="tip-card__body">LLMはステートレス（状態を保持しない）な仕組みです。会話を続けるたびに、Claude Codeは<strong>これまでのやり取りすべて</strong>を裏側で毎回まとめて送信し直しています。つまり会話が10往復目になれば、1〜9往復目の内容も含めて毎回処理されるということです。会話が長引くほど、1メッセージあたりのコストが雪だるま式に増えていきます。これが「不要な履歴を残さない」ことが節約に直結する理由です。</p>
+          <pre class="code-block"><code>1往復目: 履歴 約500トークン分を送信
+5往復目: 履歴 約3,000トークン分を送信
+10往復目: 履歴 約7,000トークン分を送信  ← 毎回これを送り直している</code></pre>
+          <p class="example-note">数値はイメージです。実際の増加量はやり取りの内容量によって変わりますが、「履歴は毎回まるごと送られる」という仕組み自体は変わりません。</p>
+        </article>
+
+        <article class="tip-card tip-card--wide tip-card--callout">
+          <span class="tip-card__number">5</span>
+          <h3 class="tip-card__title"><span class="tip-card__title-codes"><code>/clear</code> <code>/compact</code> <code>/context</code> <code>/recap</code></span><span class="tip-card__title-text">——基本コマンドを覚える</span></h3>
+          <p class="tip-card__body">会話履歴を管理するための代表的なコマンドです。違いを理解しておくと、状況に応じて使い分けられます。</p>
+          <ul class="tip-card__list">
+            <li><code>/clear</code> — 会話履歴を完全にリセットし、まっさらな状態から再開する</li>
+            <li><code>/compact</code> — これまでの会話を要約し、文脈は保ったままトークン量を圧縮する</li>
+            <li><code>/context</code> — 現在のコンテキストウィンドウの使用状況（残量・内訳）を確認する</li>
+            <li><code>/recap</code> — セッションの作業内容を要約して振り返る（環境によって名称・提供有無が異なる場合があります）</li>
+          </ul>
+          <p class="example-label">/context の出力イメージ</p>
+          <pre class="code-block"><code>Context window: 42,000 / 200,000 tokens used (21%)
+  System prompt:   3,200 tokens
+  CLAUDE.md:       1,800 tokens
+  Conversation:    34,000 tokens
+  Tool results:    3,000 tokens</code></pre>
+          <p class="example-note">表示項目や数値は実際の出力と異なる場合がありますが、「何にどれだけ使われているか」を内訳で確認できる点がポイントです。</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       INTERMEDIATE
+       ============================================================ -->
+  <section id="intermediate" class="tile tile--dark">
+    <div class="tile__inner">
+      <div class="tile__header">
+        <span class="level-badge level-badge--intermediate">中級 · INTERMEDIATE</span>
+        <h2 class="tile__title">使い分けと切り替えのコストを知る</h2>
+        <p class="tile__desc">コマンドやモデルを「いつ」「どう」切り替えるかが、トークン消費量を大きく左右します。</p>
+      </div>
+
+      <div class="tip-grid">
+
+        <article class="tip-card">
+          <span class="tip-card__number">1</span>
+          <h3 class="tip-card__title"><code>/clear</code> を打つタイミング</h3>
+          <p class="tip-card__body">今のタスクが完全に終わり、これから<strong>全く別の話題</strong>に移るときが最適なタイミングです。前のタスクの文脈を引き継ぐ必要がないなら、迷わずクリアして身軽な状態から始めましょう。</p>
+          <ul class="tip-card__list">
+            <li>例: ログイン機能のバグ修正が完了 → 次に「READMEを整備して」と別タスクへ移る</li>
+            <li>例: あるライブラリの調査が終わり、結論だけメモして次の実装に進む</li>
+          </ul>
+        </article>
+
+        <article class="tip-card">
+          <span class="tip-card__number">2</span>
+          <h3 class="tip-card__title"><code>/compact</code> を打つタイミング</h3>
+          <p class="tip-card__body">同じタスクを継続しつつ、エラーログや試行錯誤の過程など「結果には不要になった詳細」が積み上がってきたときに有効です。文脈は保持したまま、不要な詳細だけを圧縮できます。</p>
+        </article>
+
+        <article class="tip-card tip-card--wide">
+          <span class="tip-card__number">3</span>
+          <h3 class="tip-card__title">モデルを切り替えるときの注意点</h3>
+          <p class="tip-card__body">Opus・Sonnet・Haikuなど、モデルごとに性能とトークン単価が異なります。複雑な設計や難しいバグ調査には高性能モデル、単純な作業や軽い質問には軽量モデルというように、タスクの難易度に応じて選ぶのが基本です。常に最上位モデルを使い続けるのは、シンプルな作業では明らかなコスト過多になります。</p>
+          <ul class="tip-card__list">
+            <li>設計方針の検討・難しいバグの原因調査 → 高性能モデル（例: Opus）</li>
+            <li>日常的な実装・リファクタリング → 標準モデル（例: Sonnet）</li>
+            <li>typoの修正・単純な質問・定型作業 → 軽量モデル（例: Haiku）</li>
+          </ul>
+        </article>
+
+        <article class="tip-card tip-card--wide tip-card--callout">
+          <span class="tip-card__number">4</span>
+          <h3 class="tip-card__title">「途中でのモデル切り替え」は意外とトークンを消費する</h3>
+          <p class="tip-card__body">会話の途中でモデルを切り替えると、それまでの会話履歴を新しいモデル用に読み込み直す処理が発生します。多くのAPIには直前のやり取りを再利用してコストを下げる<strong>プロンプトキャッシュ</strong>という仕組みがありますが、モデルを切り替えるとこのキャッシュが効かなくなり、切り替え直後のリクエストで通常より多くのトークンを消費しがちです。モデル変更は「ここぞ」というタイミングにまとめるのがコツです。</p>
+        </article>
+
+        <article class="tip-card">
+          <span class="tip-card__number">5</span>
+          <h3 class="tip-card__title">モード切り替えにも同じ注意が必要</h3>
+          <p class="tip-card__body">プランモードと通常モードの行き来も同様です。切り替えるたびに会話の文脈が再評価されるため、頻繁な行き来は無駄なトークン消費につながります。モードはタスクの区切りでまとめて切り替えましょう。</p>
+        </article>
+
+        <article class="tip-card tip-card--wide">
+          <span class="tip-card__number">6</span>
+          <h3 class="tip-card__title">オートコンパクトの仕組みと閾値</h3>
+          <p class="tip-card__body">コンテキストウィンドウの使用量が一定の閾値を超えると、自動的に会話が要約される「オートコンパクト」が発動します。設定でこの挙動をオン・オフしたり、自分で先回りして圧縮したりすることで、重要なやり取りが圧縮の対象から漏れるのを防ぎやすくなります。</p>
+          <p class="example-label">設定を開くコマンド</p>
+          <pre class="code-block"><code>/config</code></pre>
+          <p class="example-note"><code>/config</code> を実行すると設定メニューが開き、その中に「Auto-compact」のオン・オフ項目があります。プロジェクト単位で固定したい場合は <code>.claude/settings.json</code> に書いておく方法もあります。</p>
+          <p class="example-label">settings.json での例</p>
+          <pre class="code-block"><code>{
+  "autoCompactEnabled": false
+}</code></pre>
+          <p class="example-note">設定項目名やUIはバージョンによって変わることがあります。手元の環境で <code>/config</code> から実際のメニュー名を確認してください。</p>
+          <p class="example-label">数値の閾値を直接指定できない場合の代替策</p>
+          <pre class="code-block"><code>1. /context で現在の使用率を確認する
+2. 70〜80%あたりまで来たら、自動発動を待たずに
+   自分で /compact を実行する</code></pre>
+          <p class="example-note">「自動で何%になったら圧縮するか」を細かく数値指定できない環境でも、<code>/context</code>でこまめに使用率を確認しながら早めに自分で<code>/compact</code>を打つことで、実質的に「閾値を下げる」のと同じ効果が得られます。</p>
+        </article>
+
+        <article class="tip-card tip-card--wide">
+          <span class="tip-card__number">7</span>
+          <h3 class="tip-card__title">CLAUDE.md を書くときの注意点</h3>
+          <p class="tip-card__body">CLAUDE.mdはセッションのたびに自動で読み込まれるため、内容が肥大化するとそれだけで毎回のやり取りにトークンコストが上乗せされます。</p>
+          <ul class="tip-card__list">
+            <li>手順書のような「スキル的な詳細」は書かず、プロジェクトの方針・ルールに絞る</li>
+            <li>ディレクトリ構成や仕様を網羅的に書き込みすぎない</li>
+            <li>定期的に見直し、不要になった項目は削除する</li>
+          </ul>
+          <p class="example-label">行数の目安</p>
+          <pre class="code-block"><code>目安:    150〜200行以内（日本語混在でおよそ2,000〜3,000トークン程度）
+注意ライン: 300行を超えたら分割・簡略化を検討
+危険ライン: 500行超は、毎回の会話に重い前提コストが乗り続ける状態</code></pre>
+          <p class="example-note">CLAUDE.mdは毎回のやり取りで自動的に読み込まれるため、ここが膨らむと「何もしていないのに常にコストが乗っている」状態になります。具体的な行数はトークン量の概算であり、内容の密度によって変動します。</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ADVANCED
+       ============================================================ -->
+  <section id="advanced" class="tile tile--parchment">
+    <div class="tile__inner">
+      <div class="tile__header">
+        <span class="level-badge level-badge--advanced">上級 · ADVANCED</span>
+        <h2 class="tile__title">設計と計測でさらに最適化する</h2>
+        <p class="tile__desc">ここまでの基本を押さえた上で、より能動的にトークン消費をコントロールするための考え方です。</p>
+      </div>
+
+      <div class="tip-grid">
+
+        <article class="tip-card tip-card--wide">
+          <span class="tip-card__number">1</span>
+          <h3 class="tip-card__title">MCPツールの無駄遣いに気をつける</h3>
+          <p class="tip-card__body">MCP（外部ツール連携）を有効にすると、各ツールの定義は会話の開始時にまとめてシステムプロンプトへ読み込まれます。多数のMCPサーバーを常時有効化していると、何も使っていなくてもそれだけでベースのトークン消費が増えてしまいます。今のタスクで本当に必要なツールだけを有効化する習慣をつけましょう。</p>
+        </article>
+
+        <article class="tip-card tip-card--wide">
+          <span class="tip-card__number">2</span>
+          <h3 class="tip-card__title">読み込む範囲（スコープ）を絞る</h3>
+          <p class="tip-card__body">ファイルを丸ごと読ませたり、ディレクトリを再帰的にスキャンさせたりすると、それだけで大量のトークンを消費します。該当しそうな行番号やキーワードを指定して、必要な範囲だけを読ませるよう心がけましょう。</p>
+          <p class="example-label">改善前（ファイル全体・ディレクトリ全体を読ませる）</p>
+          <pre class="code-block"><code>src/ 以下を全部読んで、認証まわりのバグを直して</code></pre>
+          <p class="example-label">改善後（キーワード検索 → 該当箇所だけ指定）</p>
+          <pre class="code-block"><code>"authenticate" でgrep して該当ファイルを特定し、
+見つかった関数だけ読んで修正して
+
+または、既に場所が分かっている場合:
+src/auth/session.ts の 80〜140行目だけ読んで、
+このバリデーション処理を直して</code></pre>
+          <ul class="tip-card__list">
+            <li>ファイル名・行番号が分かっている場合は <code>file_path:line_number</code> 形式で直接指定する</li>
+            <li>キーワードが分かっている場合は、grep的な検索でファイルを絞ってから読ませる</li>
+            <li>巨大ファイル（生成物・ログ・lockファイルなど）は最初から読み込み対象から外す</li>
+            <li>「全部見て」「とりあえず探して」のような曖昧な依頼は、無自覚な全文スキャンの原因になりやすい</li>
+          </ul>
+        </article>
+
+        <article class="tip-card">
+          <span class="tip-card__number">3</span>
+          <h3 class="tip-card__title">プランモードを積極的に使う</h3>
+          <p class="tip-card__body">実装に入る前にプランモードでしっかり設計を固めておくと、方針のズレによる手戻りややり直しのやり取りを大幅に減らせます。タスクが大きいほど、計画フェーズへの投資はトークン総量の節約として返ってきます。</p>
+        </article>
+
+        <article class="tip-card tip-card--wide">
+          <span class="tip-card__number">4</span>
+          <h3 class="tip-card__title">環境変数でアウトプットの長さを制御する</h3>
+          <p class="tip-card__body">出力トークンは単価が高いため、不要に長い説明や冗長な出力は避けたいところです。環境変数で出力の上限を設定できる場合は活用し、必要十分な分量に収まるよう調整しましょう。</p>
+          <pre class="code-block"><code>export CLAUDE_CODE_MAX_OUTPUT_TOKENS=4096   # 1回の応答での最大出力トークン数
+export MAX_THINKING_TOKENS=8000             # 拡張思考(thinking)に使うトークン予算
+export BASH_MAX_OUTPUT_LENGTH=10000         # Bashツール出力を切り詰める文字数
+export MAX_MCP_OUTPUT_TOKENS=10000          # MCPツールの出力を切り詰めるトークン数</code></pre>
+          <p class="example-note">変数名や既定値はバージョンによって変更される場合があります。設定前に手元の環境のドキュメント・ヘルプで最新の名称を確認してください。</p>
+          <ul class="tip-card__list">
+            <li>長文ログを返すツールほど、出力上限の設定効果が大きい</li>
+            <li>上限を絞りすぎると、回答が途中で切れてしまうこともあるため、タスクの内容に応じて調整する</li>
+          </ul>
+        </article>
+
+        <article class="tip-card tip-card--wide">
+          <span class="tip-card__number">5</span>
+          <h3 class="tip-card__title">トークン使用量を賢く分析する</h3>
+          <p class="tip-card__body"><code>/context</code> コマンドや使用量ダッシュボードを定期的にチェックし、「会話履歴」「システムプロンプト」「ツールの実行結果」のどの要素がコンテキストを圧迫しているのかを把握しましょう。原因が分かれば、不要な履歴のクリアや、読み込み範囲の見直しなど、的確な対策につなげられます。</p>
+        </article>
+
+        <article class="tip-card tip-card--wide">
+          <span class="tip-card__number">6</span>
+          <h3 class="tip-card__title">サブエージェントでメインの文脈を汚さない</h3>
+          <p class="tip-card__body">広範囲のコード調査や試行錯誤が必要な作業を、サブエージェント（別のエージェントへの委任）に任せると、検索結果や試行錯誤の途中経過がメインの会話履歴に積み上がらずに済みます。サブエージェントは要点だけをまとめてメインの会話に報告するため、結果的にメインのコンテキストを圧迫しません。</p>
+          <p class="example-label">使い分けの目安</p>
+          <pre class="code-block"><code>調査・横断検索など探索的なタスク
+  → サブエージェントに委任（結果の要約だけが返ってくる）
+
+ファイル1〜2個の単純な修正
+  → 自分（メインの会話）でそのまま対応</code></pre>
+          <p class="example-note">何でもサブエージェントに投げると委任のオーバーヘッドが増えるため、「探索量が多い・結果が長くなりそうなタスク」に絞るのがコツです。</p>
+        </article>
+
+        <article class="tip-card tip-card--wide tip-card--callout">
+          <span class="tip-card__number">7</span>
+          <h3 class="tip-card__title">サブエージェント vs マルチエージェント（チーム）——トータルのトークン消費はむしろ増える</h3>
+          <p class="tip-card__body">サブエージェントへの委任は「メインの会話を圧迫しない」ための工夫であって、システム全体のトークン消費そのものを減らす魔法ではありません。特に複数のサブエージェントを並列で走らせる「エージェントチーム」構成は、登場するエージェントの数だけシステムプロンプトやツール定義などの固定コストが重複するため、合計のトークン消費は単一エージェントより明らかに増えます。</p>
+          <p class="example-label">目安となる消費倍率</p>
+          <pre class="code-block"><code>チャットのみ（ツール不使用）                          : 基準 (1x)
+単一エージェント（自分でツールを使って調査・編集）       : 目安 約4倍
+マルチエージェント（オーケストレーター＋複数サブエージェント並列）: 目安 約15倍</code></pre>
+          <p class="example-note">Anthropic社が公開しているマルチエージェント型リサーチシステムの技術解説記事で紹介されている目安値です。実際の倍率はタスクの並列数・内容によって変動します。</p>
+          <p class="example-label">なぜ増えるのか</p>
+          <ul class="tip-card__list">
+            <li>各サブエージェントは自分専用のシステムプロンプト・ツール定義一式をゼロから持つため、固定コストがエージェントの数だけ重複する</li>
+            <li>並列実行後、親（オーケストレーター）エージェントが各サブエージェントの結果を統合・要約するための追加コストもかかる</li>
+            <li>結論: マルチエージェント構成が買っているのは「トークンの節約」ではなく「処理時間（ウォールクロックタイム）の短縮」</li>
+          </ul>
+          <p class="example-label">使い分けの目安</p>
+          <ul class="tip-card__list">
+            <li>大きく独立した複数の調査を同時に進めたい、待ち時間を優先したい → チーム構成（並列マルチエージェント）が有効</li>
+            <li>1つの作業を順番にこなせば十分、手順に依存関係が強い → 単一エージェント、または1体のサブエージェントへの委任で十分</li>
+          </ul>
+        </article>
+
+        <article class="tip-card">
+          <span class="tip-card__number">8</span>
+          <h3 class="tip-card__title">プロンプトキャッシュを意識する</h3>
+          <p class="tip-card__body">多くのAPIには、会話の先頭部分（システムプロンプトやCLAUDE.mdなど）が前回と同じであれば、そこを再計算せずに低コストで再利用する「プロンプトキャッシュ」があります。CLAUDE.mdや初期指示を会話の途中で頻繁に書き換えると、このキャッシュが効かなくなり、毎回のコストが上がってしまいます。</p>
+          <ul class="tip-card__list">
+            <li>セッション中はCLAUDE.mdやシステム指示をなるべく変更しない</li>
+            <li>変更が必要なら、こまめに少しずつ直すより、まとめて一度に更新する</li>
+          </ul>
+        </article>
+
+        <article class="tip-card">
+          <span class="tip-card__number">9</span>
+          <h3 class="tip-card__title">巨大ファイル・生成物を読み込み対象から外す</h3>
+          <p class="tip-card__body"><code>node_modules</code>、ビルド成果物、<code>package-lock.json</code> のような自動生成ファイルは、人間が読む情報量に対してファイルサイズが非常に大きく、誤って読み込ませるとコンテキストを一気に消費します。</p>
+          <pre class="code-block"><code># 読み込み対象から除外しておきたい代表例
+node_modules/
+dist/ build/ .next/
+*.lock, package-lock.json, yarn.lock
+*.min.js, *.map
+ログファイル・巨大なCSV/JSONデータ</code></pre>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer__inner">
+    <p class="footer__title">少しの工夫が、長く使えるClaude Codeにつながる</p>
+    <p class="footer__body">トークンの仕組みを理解し、こまめな履歴管理とモデル・モード選択を意識するだけで、同じ作業をより効率的に進められます。気になったTipsから、今日の作業に取り入れてみてください。</p>
+    <p class="footer__legal">Claude Code Token Saving Tips — 個人学習用にまとめた非公式ガイドです。</p>
+  </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" aria-label="ページの先頭へ戻る">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 15l-6-6-6 6"/>
+  </svg>
+</button>
+
+<script src="js/script.js"></script>
+</body>
+</html>
