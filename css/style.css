@@ -447,6 +447,15 @@ h1, h2, h3, p {
   border-bottom-color: rgba(255, 255, 255, 0.12);
 }
 
+.tip-group__intro {
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: 0;
+  color: var(--color-ink-muted-80);
+  max-width: 640px;
+  margin-bottom: var(--space-lg);
+}
+
 .tip-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
