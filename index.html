@@ -69,6 +69,8 @@
         <p class="tile__desc">節約の第一歩は、何が消費されているのかを正しく知ることです。基本概念とコマンドの使い分けを押さえましょう。</p>
       </div>
 
+      <div class="tip-group">
+      <p class="tip-group__label">操作で節約</p>
       <div class="tip-grid">
 
         <article class="tip-card tip-card--wide">
@@ -126,6 +128,43 @@
         </article>
 
       </div>
+      </div>
+
+      <div class="tip-group">
+      <p class="tip-group__label">伝え方で節約</p>
+      <div class="tip-grid">
+
+        <article class="tip-card">
+          <span class="tip-card__number">6</span>
+          <h3 class="tip-card__title">関連する質問はまとめて送る</h3>
+          <p class="tip-card__body">関連する質問を1つずつ送ると、その都度ターンを消費します。最初に必要な情報をまとめて聞くだけで、やり取りの回数を大きく減らせます。</p>
+          <p class="example-label">改善前</p>
+          <pre class="code-block"><code>Node.jsのバージョン確認方法を教えて
+
+（回答後）パッケージマネージャの確認方法も教えて
+
+（回答後）プロジェクトの起動コマンドも教えて</code></pre>
+          <p class="example-label">改善後</p>
+          <pre class="code-block"><code>Node.jsのバージョン確認方法・パッケージマネージャの確認方法・
+プロジェクトの起動コマンドを、まとめて教えて</code></pre>
+          <p class="example-note">関連する質問は最初から並べて聞くことで、回答も1往復で済みます。</p>
+        </article>
+
+        <article class="tip-card">
+          <span class="tip-card__number">7</span>
+          <h3 class="tip-card__title">環境情報は最初の一言に添える</h3>
+          <p class="tip-card__body">OSやバージョンなど、回答が分岐しうる前提条件は質問と同時に伝えましょう。後から言い直す分、往復が増えてしまいます。</p>
+          <p class="example-label">改善前</p>
+          <pre class="code-block"><code>このエラーの直し方を教えて
+
+（回答後）使っているのはmacOSのターミナルです</code></pre>
+          <p class="example-label">改善後</p>
+          <pre class="code-block"><code>（macOS / zsh環境です）このエラーの直し方を教えて</code></pre>
+          <p class="example-note">一言加えるだけで、環境確認のための聞き直しが丸ごと不要になります。さらに環境情報自体を毎回書きたくない場合は、中級「CLAUDE.mdに環境情報を常設する」が役立ちます。</p>
+        </article>
+
+      </div>
+      </div>
     </div>
   </section>
 
@@ -140,6 +179,8 @@
         <p class="tile__desc">コマンドやモデルを「いつ」「どう」切り替えるかが、トークン消費量を大きく左右します。</p>
       </div>
 
+      <div class="tip-group">
+      <p class="tip-group__label">操作で節約</p>
       <div class="tip-grid">
 
         <article class="tip-card">
@@ -217,6 +258,59 @@
         </article>
 
       </div>
+      </div>
+
+      <div class="tip-group">
+      <p class="tip-group__label">伝え方で節約</p>
+      <div class="tip-grid">
+
+        <article class="tip-card tip-card--wide">
+          <span class="tip-card__number">8</span>
+          <h3 class="tip-card__title">CLAUDE.mdに環境情報を常設する</h3>
+          <p class="tip-card__body">CLAUDE.mdはセッションのたびに自動で読み込まれるため、OSやツールなどの前提条件を一度書いておけば、以後は毎回伝え直す必要がなくなります。</p>
+          <p class="example-label">記述例</p>
+          <pre class="code-block"><code>## 環境情報
+
+- OS: macOS
+- ターミナル: zsh
+- パッケージ管理: Homebrew, npm
+- エディタ: VSCode（`code` コマンド有効）
+
+## 作業時の前提
+
+- 手順・ショートカット・パスはmacOS表記で案内すること
+- パスは `~/` 形式で統一する</code></pre>
+          <p class="example-note">「環境情報（事実）」と「作業時の前提（振る舞いの指示）」を分けて書いておくと、環境が変わったときにどちらを直せばいいか分かりやすくなります。</p>
+        </article>
+
+        <article class="tip-card">
+          <span class="tip-card__number">9</span>
+          <h3 class="tip-card__title">「条件付き実行」を指示に含める</h3>
+          <p class="tip-card__body">「まず調査→確認→実行」を毎回律儀に区切ると、その分だけ往復が増えます。「迷う場合だけ確認して」と判断基準を先に渡しておくと、調査から実行までを一括で任せられます。</p>
+          <p class="example-label">改善前</p>
+          <pre class="code-block"><code>ログイン処理にバリデーションを追加して</code></pre>
+          <p class="example-label">改善後</p>
+          <pre class="code-block"><code>ログイン処理にバリデーションを追加して。
+実装方針に複数の選択肢があって判断に迷う場合だけ確認して、
+それ以外はそのまま実装してOK</code></pre>
+          <p class="example-note">「迷わない場合は聞かない」という基準を渡すことで、調査・提案・修正を1ターンにまとめられます。</p>
+        </article>
+
+        <article class="tip-card">
+          <span class="tip-card__number">10</span>
+          <h3 class="tip-card__title">複数の変更を1メッセージにまとめてバッチ化する</h3>
+          <p class="tip-card__body">連続した修正を1個ずつ送ると、その都度「やりました、次は？」というやり取りが挟まります。最初に全部リストアップしておきましょう。</p>
+          <pre class="code-block"><code>以下を順に直してください。
+途中で質問があれば全部まとめて最後に聞いて:
+
+1. ログイン画面のバリデーションを追加
+2. エラーメッセージの文言を統一
+3. 該当箇所のテストを追加</code></pre>
+          <p class="example-note">慎重に進めたい場合でも、「確認は最後にまとめて」と伝えるだけで、確認のたびに発生する往復を1回に集約できます。</p>
+        </article>
+
+      </div>
+      </div>
     </div>
   </section>
 
@@ -231,6 +325,8 @@
         <p class="tile__desc">ここまでの基本を押さえた上で、より能動的にトークン消費をコントロールするための考え方です。</p>
       </div>
 
+      <div class="tip-group">
+      <p class="tip-group__label">操作で節約</p>
       <div class="tip-grid">
 
         <article class="tip-card tip-card--wide">
@@ -344,6 +440,36 @@ dist/ build/ .next/
 ログファイル・巨大なCSV/JSONデータ</code></pre>
         </article>
 
+      </div>
+      </div>
+
+      <div class="tip-group">
+      <p class="tip-group__label">伝え方で節約</p>
+      <div class="tip-grid">
+
+        <article class="tip-card tip-card--wide">
+          <span class="tip-card__number">10</span>
+          <h3 class="tip-card__title">diffプレビューを指定して確認往復を圧縮する</h3>
+          <p class="tip-card__body">実行前に必ず内容を見たい場合は、「実行して」ではなく「diffだけ出して」と指定しましょう。調査・修正・diff提示までを1ターンでまとめて行えます。</p>
+          <pre class="code-block"><code>バリデーションを追加して、変更箇所のdiffだけ見せて。
+問題なければ次のメッセージで「OK」と送るので、
+その時は確認なしでそのまま確定して</code></pre>
+          <p class="example-note">「diff提示」と「OK」の2往復だけで完結し、調査だけのための往復が消えます。ただし構造を大きく変える変更や元に戻しづらい操作は、念のため都度確認したほうが安全です。</p>
+        </article>
+
+        <article class="tip-card tip-card--wide">
+          <span class="tip-card__number">11</span>
+          <h3 class="tip-card__title">CLAUDE.mdに「標準確認ルール」を書いておく</h3>
+          <p class="tip-card__body">「迷ったら聞いて、それ以外はそのまま進めてOK」という基準を指示のたびに書くのではなく、CLAUDE.mdに常設しておくと、確認の粒度を毎回指定する手間がなくなります。プランモード（操作で節約・上級③）と組み合わせると、計画フェーズと実行フェーズの分離でも同様に往復を減らせます。</p>
+          <pre class="code-block"><code>## 確認なしで進めてよい操作
+
+- 確認が必要な変更（削除・構造変更・公開設定の変更）以外は、
+  聞かずにそのまま進めてOK
+- 迷うケースがあった場合のみ、まとめて質問してから進める</code></pre>
+          <p class="example-note">ルールをCLAUDE.mdに一度書いておけば、以後のすべてのセッションで「確認の基準」をその都度伝える必要がなくなります。</p>
+        </article>
+
+      </div>
       </div>
     </div>
   </section>
